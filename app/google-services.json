@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "980783081520",
+    "firebase_url": "https://blood-bucket-b8e7c.firebaseio.com",
+    "project_id": "blood-bucket-b8e7c",
+    "storage_bucket": "blood-bucket-b8e7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980783081520:android:d55d3e837d1f436d3ce5f5",
+        "android_client_info": {
+          "package_name": "com.example.blood_bucket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980783081520-7hmvrgp1pjp2r6u9nq22ghaut39oe9rb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUQsDsA8qreXyB5jhQ8QWM40vEOiGEYY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980783081520-7hmvrgp1pjp2r6u9nq22ghaut39oe9rb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

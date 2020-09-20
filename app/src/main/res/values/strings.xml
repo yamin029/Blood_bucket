@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Blood_bucket</string>
+    <string name="username">Enter your email</string>
+    <string name="password">Enter your Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="not_a_member">new user? </string>
+    <string name="sign_up_here"> <u>sign up here</u></string>
 </resources>
