@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SignupActivity"
-    android:background="@drawable/signup_bg"
     android:weightSum="10">
 
     <de.hdodenhof.circleimageview.CircleImageView
