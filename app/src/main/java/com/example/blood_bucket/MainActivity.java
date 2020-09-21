@@ -1,30 +1,43 @@
 package com.example.blood_bucket;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
-    EditText mEtUserName;
+    EditText mEtUserEmail;
     EditText mEtPassword;
     Button mButtonSignIn;
     TextView mTvSignUp;
+
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
-            mEtUserName = findViewById(R.id.etUsername);
+            mEtUserEmail = findViewById(R.id.etUsername);
             mEtPassword = findViewById(R.id.etPassword);
             mButtonSignIn = findViewById(R.id.btnSignIn);
             mTvSignUp = findViewById(R.id.tvSignUp);
+
+            mAuth = FirebaseAuth.getInstance();
 
             mTvSignUp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -37,6 +50,28 @@ public class MainActivity extends AppCompatActivity {
             mButtonSignIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    final String userEmail = mEtUserEmail.getText().toString().trim();
+                    final String userPassword = mEtPassword.getText().toString().trim();
+
+                    if(userEmail.isEmpty() || userPassword.isEmpty()){
+                        Toast.makeText(MainActivity.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        mAuth.signInWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(MainActivity.this,
+                                new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (!task.isSuccessful()){
+                                            Toast.makeText(MainActivity.this, "SignUp Unsuccessful"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }else {
+                                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                                            Toast.makeText(MainActivity.this, mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+
+                    }
 
                 }
             });

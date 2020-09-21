@@ -5,52 +5,127 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SignupActivity">
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your name">
-    </EditText>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your email">
-    </EditText>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your password">
-    </EditText>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your Address">
-    </EditText>
+    tools:context=".SignupActivity"
+    android:background="@drawable/signup_bg"
+    android:weightSum="10">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_weight="3"
+        android:id="@+id/ivImage"
+        android:layout_width="200dp"
+        android:layout_height="400px"
+        android:paddingBottom="30px"
+        android:src="@drawable/mood"
+        android:layout_centerHorizontal="true"
+        android:onClick="chooseImage"
+        android:layout_gravity="center"
+        >
+    </de.hdodenhof.circleimageview.CircleImageView>
     <LinearLayout
+        android:weightSum="10"
+        android:layout_weight="6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp">
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select your blood group :">
-        </TextView>
-        <Spinner
-            android:layout_width="300px"
-            android:layout_height="100px"
-            android:entries="@array/blood_groups"
-            android:backgroundTint="#FFFFFF"
-            android:outlineAmbientShadowColor="#fff"
-            >
-        </Spinner>
+            android:hint="Enter your name">
+        </EditText>
+        <EditText
+            android:id="@+id/etUserEmail"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your email"
+            android:inputType="textEmailAddress">
+        </EditText>
+        <EditText
+            android:id="@+id/etUserPassword"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your password">
+        </EditText>
+        <EditText
+            android:id="@+id/etUserAddress"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Address">
+        </EditText>
+
+        <EditText
+            android:id="@+id/etUserContactNumber"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your contact number"
+            android:inputType="number">
+        </EditText>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select your blood group :"
+                android:textSize="20sp">
+            </TextView>
+            <Spinner
+                android:id="@+id/bloodGroupSpinner"
+                android:layout_width="300px"
+                android:layout_height="100px"
+                android:entries="@array/blood_groups"
+                android:backgroundTint="#FFFFFF"
+                android:outlineAmbientShadowColor="#fff"
+                >
+            </Spinner>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select your City :"
+                android:textSize="20sp">
+            </TextView>
+            <Spinner
+                android:id="@+id/citySpinner"
+                android:layout_width="300px"
+                android:layout_height="100px"
+                android:entries="@array/cities_groups"
+                android:backgroundTint="#FFFFFF"
+                android:outlineAmbientShadowColor="#fff"
+                >
+            </Spinner>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <EditText
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_weight="1"
+        android:layout_gravity="end"
+        android:layout_margin="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your contact number">
-    </EditText>
+        android:background="@drawable/rounded_corners"
+        android:text="register">
+
+    </Button>
+
+
 
 
 </LinearLayout>

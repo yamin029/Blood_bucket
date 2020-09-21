@@ -15,4 +15,15 @@
         <item>AB+</item>
         <item>AB-</item>
     </array>
+    <array name="cities_groups">
+        <item>Dhaka</item>
+        <item>Chittagong</item>
+        <item>Rajshahi</item>
+        <item>Mymensingh</item>
+        <item>Khulna</item>
+        <item>Sylhet</item>
+        <item>Barisal</item>
+        <item>Rangpur</item>
+        <item>Comilla</item>
+    </array>
 </resources>
