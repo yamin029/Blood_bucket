@@ -1,28 +1,21 @@
 package com.example.blood_bucket;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-    ImageView hIvProfile;
+    //ImageView hIvProfile;
+    RecyclerView hrecyclerView;
+    MyAdapter myAdapter;
+
     private FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -30,49 +23,72 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        hIvProfile = findViewById(R.id.ivImage);
-        mAuth = FirebaseAuth.getInstance();
-        System.out.println(mAuth.getCurrentUser().getEmail());
-        Toast.makeText(this, mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+        try {
+            mAuth = FirebaseAuth.getInstance();
+            System.out.println(mAuth.getCurrentUser().getEmail());
 
-        final List<User> userList=new ArrayList<>();
-
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //Log.d("TAG", document.getId() + " => " + document.getData());
-                                //System.out.println(document.getData());
-
-                                userList.add(document.toObject(User.class));
+            hrecyclerView = findViewById(R.id.recyclerView);
+            hrecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-                            }
-                            //System.out.println(userList.get(1).getUserImageUri());
-                            //System.out.println((mAuth.getCurrentUser().getUid()));
-                            for(User ckuser:userList){
-
-                                System.out.println((ckuser.getUserID()));
-                                if(ckuser.getUserID().equals(mAuth.getCurrentUser().getUid())){
-                                    System.out.println("matches");
-                                    Glide.with(getApplicationContext())
-                                            .load(Uri.parse(ckuser.getUserImageUri()))
-                                            .into(hIvProfile);
-                                   // hIvProfile.setImageURI(Uri.parse(ckuser.getUserImageUri()));
-                                }
-                                else {
-                                    System.out.println("doesn't match");
-                                }
-                            }
-                        } else {
-                            Log.w("TAG", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
 
 
+            FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
+                    .setQuery(FirebaseFirestore.getInstance().collection("users"), User.class)
+                    .build();
+
+            myAdapter = new MyAdapter(options);
+            hrecyclerView.setAdapter(myAdapter);
+
+
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        //hIvProfile = findViewById(R.id.ivImage);
+
+//        final List<User> userList=new ArrayList<>();
+//        db.collection("users")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                //Log.d("TAG", document.getId() + " => " + document.getData());
+//                                //System.out.println(document.getData());
+//
+//                                userList.add(document.toObject(User.class));
+//                            }
+//                            for(User ckuser:userList){
+//                                System.out.println((ckuser.getUserID()));
+//                                if(ckuser.getUserID().equals(mAuth.getCurrentUser().getUid())){
+//                                    System.out.println("matches");
+//                                    Glide.with(getApplicationContext())
+//                                            .load(Uri.parse(ckuser.getUserImageUri()))
+//                                            .into(hIvProfile);
+//                                }
+//                                else {
+//                                    System.out.println("doesn't match");
+//                                }
+//                            }
+//                        } else {
+//                            Log.w("TAG", "Error getting documents.", task.getException());
+//                        }
+//                    }
+//                });
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        myAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        myAdapter.stopListening();
     }
 }
