@@ -1,11 +1,14 @@
 package com.example.blood_bucket;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -19,6 +22,7 @@ public class HomeActivity extends AppCompatActivity {
     //ImageView hIvProfile;
     RecyclerView hrecyclerView;
     MyAdapter myAdapter;
+    DrawerLayout drawerLayout;
 
     private FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -33,6 +37,8 @@ public class HomeActivity extends AppCompatActivity {
 
             hrecyclerView = findViewById(R.id.recyclerView);
             hrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+            drawerLayout = findViewById(R.id.drawer_layout);
 
 
 
@@ -61,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         }catch (Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
         //hIvProfile = findViewById(R.id.ivImage);
 
 //        final List<User> userList=new ArrayList<>();
@@ -107,5 +114,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         myAdapter.stopListening();
+    }
+    public void clickMenu(View view){
+        openDrawer(drawerLayout);
+    }
+
+    private static void openDrawer(DrawerLayout drawerLayout) {
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 }
