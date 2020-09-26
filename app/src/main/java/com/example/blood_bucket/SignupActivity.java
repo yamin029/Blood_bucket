@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -90,9 +91,13 @@ public class SignupActivity extends AppCompatActivity {
             mStorageRef = FirebaseStorage.getInstance().getReference();
 
 
+
             btnRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+
+
                     final String userName = sUserName.getText().toString().trim();
                     final String userEmail = sUserEmail.getText().toString().trim();
                     final String userPassword = sUserPassword.getText().toString().trim();
@@ -113,8 +118,6 @@ public class SignupActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (!task.isSuccessful()) {
                                             Toast.makeText(SignupActivity.this, "SignUp Unsuccessful" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-
                                         } else {
                                             uploadProfileImage(userName,userEmail,userAddress,userContactNumber,userBloodGroup,userCity,imageUri,mAuth.getCurrentUser());
                                             startActivity(new Intent(SignupActivity.this, HomeActivity.class));

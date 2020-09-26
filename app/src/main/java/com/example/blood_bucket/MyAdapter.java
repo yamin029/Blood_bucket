@@ -1,5 +1,7 @@
 package com.example.blood_bucket;
 
+import android.content.Intent;
+import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class MyAdapter extends FirestoreRecyclerAdapter<User,MyAdapter.MyViewHolder> {
 
 
+    private OnItemClickListener listener;
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -37,6 +43,7 @@ public class MyAdapter extends FirestoreRecyclerAdapter<User,MyAdapter.MyViewHol
         holder.maTvUserBloodGroup.setText(model.getUserBloodGroup());
         holder.maTvUserContactNumber.setText(model.getUserContactNumber());
         Glide.with(holder.maImageView.getContext()).load(model.getUserImageUri()).into(holder.maImageView);
+        holder.maTvUserCity.setText(model.getUserCity());
 
     }
 
@@ -49,7 +56,7 @@ public class MyAdapter extends FirestoreRecyclerAdapter<User,MyAdapter.MyViewHol
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         CircleImageView maImageView;
-        TextView maTvUserName,maTvUserBloodGroup,maTvUserContactNumber;
+        TextView maTvUserName,maTvUserBloodGroup,maTvUserContactNumber,maTvUserCity;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +65,27 @@ public class MyAdapter extends FirestoreRecyclerAdapter<User,MyAdapter.MyViewHol
             maTvUserName = itemView.findViewById(R.id.tvUserName);
             maTvUserBloodGroup = itemView.findViewById(R.id.tvUserBloodGroup);
             maTvUserContactNumber = itemView.findViewById(R.id.tvUserContactNumber);
+            maTvUserCity = itemView.findViewById(R.id.tvUserCity);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //startActivity(new Intent(HomeActivity.this, DonerProfile.class));
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION && listener != null){
+                        listener.onItemClick(getSnapshots().getSnapshot(position),position);
+                    }
+
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 }

@@ -1,8 +1,10 @@
 package com.example.blood_bucket;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class User {
+public class User implements Parcelable {
     private String userName;
     private String userEmail;
     private String userContactNumber;
@@ -25,6 +27,29 @@ public class User {
     public User() {
 
     }
+
+    protected User(Parcel in) {
+        userName = in.readString();
+        userEmail = in.readString();
+        userContactNumber = in.readString();
+        userBloodGroup = in.readString();
+        userCity = in.readString();
+        userAddress = in.readString();
+        userImageUri = in.readString();
+        userID = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getUserName() {
         return userName;
@@ -88,5 +113,22 @@ public class User {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(userName);
+        parcel.writeString(userEmail);
+        parcel.writeString(userContactNumber);
+        parcel.writeString(userBloodGroup);
+        parcel.writeString(userCity);
+        parcel.writeString(userAddress);
+        parcel.writeString(userImageUri);
+        parcel.writeString(userID);
     }
 }

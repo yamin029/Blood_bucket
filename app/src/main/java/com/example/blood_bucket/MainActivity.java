@@ -3,6 +3,7 @@ package com.example.blood_bucket;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     EditText mEtPassword;
     Button mButtonSignIn;
     TextView mTvSignUp;
+    ProgressDialog progressDialog;
 
     private FirebaseAuth mAuth;
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
             mAuth = FirebaseAuth.getInstance();
 
+            progressDialog = new ProgressDialog(this);
+
             mTvSignUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -50,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
             mButtonSignIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    progressDialog.setTitle("login");
+                    progressDialog.setMessage("Processing....");
+                    progressDialog.show();
                     final String userEmail = mEtUserEmail.getText().toString().trim();
                     final String userPassword = mEtPassword.getText().toString().trim();
 
@@ -62,10 +70,12 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (!task.isSuccessful()){
+                                            progressDialog.dismiss();
                                             Toast.makeText(MainActivity.this, "SignUp Unsuccessful"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }else {
                                             startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                                            Toast.makeText(MainActivity.this, mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                                            progressDialog.dismiss();
+                                            //Toast.makeText(MainActivity.this, mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });

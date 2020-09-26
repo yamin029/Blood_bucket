@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.Serializable;
 
 public class HomeActivity extends AppCompatActivity {
     //ImageView hIvProfile;
@@ -39,6 +43,19 @@ public class HomeActivity extends AppCompatActivity {
 
             myAdapter = new MyAdapter(options);
             hrecyclerView.setAdapter(myAdapter);
+
+            myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+                    User user = documentSnapshot.toObject(User.class);
+                    Toast.makeText(HomeActivity.this, "Item Clicked"+ user.getUserName(), Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(HomeActivity.this,DonerProfile.class);
+                    intent.putExtra("user", user);
+                    startActivity(intent);
+                }
+            });
 
 
         }catch (Exception e){
