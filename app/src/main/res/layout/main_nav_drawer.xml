@@ -10,7 +10,8 @@
         android:layout_height="120dp"
         android:layout_margin="16dp"
         android:onClick="ClickProfile"
-        android:src="@drawable/blood_icon">
+        android:src="@drawable/blood_icon"
+        android:id="@+id/dmProfilePhoto">
 
     </de.hdodenhof.circleimageview.CircleImageView>
     <TextView
@@ -19,7 +20,8 @@
         android:text="Blood Bucket"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textAlignment="center">
+        android:textAlignment="center"
+        android:id="@+id/dmUserName">
 
     </TextView>
     

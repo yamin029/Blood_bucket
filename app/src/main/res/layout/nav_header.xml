@@ -6,6 +6,7 @@
     android:orientation="horizontal"
     android:padding="2dp"
     android:gravity="center_vertical"
+    android:elevation="20dp"
     >
 
     <ImageView
@@ -27,9 +28,11 @@
 
     </TextView>
     <ImageView
+        android:id="@+id/navSearch"
+        android:onClick="clickSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_more">
+        android:src="@drawable/ic_baseline_search_24">
 
     </ImageView>
 

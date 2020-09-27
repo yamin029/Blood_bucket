@@ -1,9 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DonerProfile">
+    tools:context=".DonorProfile"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:weightSum="10">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_weight="4"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/mood"
+        android:id="@+id/userProfile">
+    </de.hdodenhof.circleimageview.CircleImageView>
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Yamin Hossain"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:id="@+id/userName">
+    </TextView>
+    <LinearLayout
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood Group : "
+                android:textSize="20sp">
+            </TextView>
+            <TextView
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:id="@+id/userBloodGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B+"
+                android:textSize="20sp"
+                android:background="@drawable/blood_rounded_corner">
+            </TextView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address : "
+                android:textSize="20sp">
+            </TextView>
+            <TextView
+                android:id="@+id/userAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hashara Sreenagar Munshigunj"
+                android:textSize="20sp">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City : "
+                android:textSize="20sp">
+            </TextView>
+            <TextView
+                android:id="@+id/userCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dhaka"
+                android:textSize="20sp">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email : "
+                android:textSize="20sp">
+            </TextView>
+            <TextView
+                android:id="@+id/userEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="yaminkhan017@gmail.com"
+                android:textSize="20sp">
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact Number : "
+                android:textSize="20sp">
+            </TextView>
+            <TextView
+                android:id="@+id/userContactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="01636407330"
+                android:textSize="20sp">
+            </TextView>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+    <ImageButton
+        android:layout_weight="1"
+        android:padding="7dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/roundbtn"
+        android:onClick="callUser"
+        android:src="@drawable/ic_call"
+        android:layout_marginBottom="20dp"
+        />
+
+</LinearLayout>
