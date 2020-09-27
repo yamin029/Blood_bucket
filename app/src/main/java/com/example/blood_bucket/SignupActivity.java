@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -17,13 +18,25 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.auth.User;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -42,7 +55,11 @@ public class SignupActivity extends AppCompatActivity {
     private Uri imageUri;
     private Bitmap imageTOStore;
 
+
+    private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private StorageReference mStorageRef;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     public void onStart() {
@@ -69,12 +86,18 @@ public class SignupActivity extends AppCompatActivity {
             sUserCitySpinner = findViewById(R.id.citySpinner);
             btnRegister = findViewById(R.id.btnRegister);
 
+            mDatabase = FirebaseDatabase.getInstance().getReference();
             mAuth = FirebaseAuth.getInstance();
+            mStorageRef = FirebaseStorage.getInstance().getReference();
+
 
 
             btnRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+
+
                     final String userName = sUserName.getText().toString().trim();
                     final String userEmail = sUserEmail.getText().toString().trim();
                     final String userPassword = sUserPassword.getText().toString().trim();
@@ -95,10 +118,9 @@ public class SignupActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (!task.isSuccessful()) {
                                             Toast.makeText(SignupActivity.this, "SignUp Unsuccessful" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                            uploadProfileImage(userName,userEmail,userAddress,userContactNumber,userBloodGroup,userCity,imageUri,mAuth.getCurrentUser());
-
                                         } else {
-                                            startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                            uploadProfileImage(userName,userEmail,userAddress,userContactNumber,userBloodGroup,userCity,imageUri,mAuth.getCurrentUser());
+                                            startActivity(new Intent(SignupActivity.this, HomeActivity.class));
                                         }
 
                                     }
@@ -112,8 +134,88 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadProfileImage(String userName, String userEmail, String userAddress, String userContactNumber, String userBloodGroup, String userCity, Uri imageUri, FirebaseUser currentUser) {
+    private void uploadProfileImage(final String userName, final String userEmail, final String userAddress, final String userContactNumber, final String userBloodGroup, final String userCity, Uri imageUri, final FirebaseUser currentUser) {
 
+        //Uri file = Uri.fromFile(new File("/images/"+currentUser.getUid()));
+        final StorageReference riversRef = mStorageRef.child("images/"+currentUser.getUid());
+
+        riversRef.putFile(imageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        //Uri downloadUrl = taskSnapshot.getd
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                System.out.println(uri);
+                                //sImageView.setImageURI(uri);
+                                Glide.with(getApplicationContext())
+                                        .load(uri)
+                                        .into(sImageView);
+//                                Map<String, Object> user = new HashMap<>();
+//                                user.put("name",userName.toString());
+//                                user.put("email",userEmail.toString());
+//                                user.put("address",userAddress.toString());
+//                                user.put("userID",currentUser.getUid().toString());
+//                                user.put("image",uri);
+//                                user.put("number",userContactNumber);
+//                                user.put("bloodGroup",userBloodGroup);
+//                                user.put("city",userCity);
+
+                                User user = new User(userName,userEmail,userContactNumber,userBloodGroup,userCity,userAddress,uri.toString(),currentUser.getUid().toString());
+                                System.out.println(user);
+
+                                //mDatabase.child("users").child(user.getUserID()).setValue(user);
+
+
+                                // Add a new document with a generated ID
+                                db.collection("users")
+                                        .add(user)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("TAG", "Error adding document", e);
+                                            }
+                                        });
+
+
+             }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                    }
+                });
+        
+    }
+
+    private void updateUser(Map<String, Object> user) {
+        Toast.makeText(this, "updateusercalled", Toast.LENGTH_SHORT).show();
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error adding document", e);
+                    }
+                });
     }
 
     public void chooseImage(View view) {
@@ -140,7 +242,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 //imageTOStore = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
 
-                sImageView.setImageURI(imageUri);
+                //sImageView.setImageURI(imageUri);
 
             }
             else {
