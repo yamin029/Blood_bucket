@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -21,7 +20,7 @@ public class DonorProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doner_profile);
+        setContentView(R.layout.activity_donor_profile);
 
         dUserProfile = findViewById(R.id.userProfile);
         dUserName = findViewById(R.id.userName);
