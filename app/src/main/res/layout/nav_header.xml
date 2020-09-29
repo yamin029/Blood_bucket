@@ -6,6 +6,8 @@
     android:orientation="horizontal"
     android:padding="2dp"
     android:gravity="center_vertical"
+    android:elevation="20dp"
+    android:background="#000000"
     >
 
     <ImageView
@@ -26,12 +28,6 @@
         >
 
     </TextView>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_more">
-
-    </ImageView>
 
 
 </LinearLayout>

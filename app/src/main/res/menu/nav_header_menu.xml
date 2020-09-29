@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@+id/dnHome" android:title="Blood Bucket" android:icon="@drawable/home"></item>
-    <item android:id="@+id/dnJoin" android:title="Join as a donor" android:icon="@drawable/plus"></item>
-    <item android:id="@+id/dnLogOut" android:title="Logout" android:icon="@drawable/logout"></item>
-
-</menu>
