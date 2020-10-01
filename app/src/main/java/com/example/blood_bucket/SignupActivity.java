@@ -106,8 +106,6 @@ public class SignupActivity extends AppCompatActivity {
                     final String userBloodGroup = sUserBloodGroupSpinner.getSelectedItem().toString();
                     final String userCity = sUserCitySpinner.getSelectedItem().toString();
 
-//                  System.out.println(userName+userEmail+userPassword+userAddress+userContactNumber+userBloodGroup+userCity);
-
 
                     if (userName.isEmpty() || userEmail.isEmpty() || userPassword.isEmpty() || userAddress.isEmpty() || userContactNumber.isEmpty() || userBloodGroup.isEmpty() || userCity.isEmpty()) {
                         Toast.makeText(SignupActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
@@ -149,27 +147,11 @@ public class SignupActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 System.out.println(uri);
-                                //sImageView.setImageURI(uri);
                                 Glide.with(getApplicationContext())
                                         .load(uri)
                                         .into(sImageView);
-//                                Map<String, Object> user = new HashMap<>();
-//                                user.put("name",userName.toString());
-//                                user.put("email",userEmail.toString());
-//                                user.put("address",userAddress.toString());
-//                                user.put("userID",currentUser.getUid().toString());
-//                                user.put("image",uri);
-//                                user.put("number",userContactNumber);
-//                                user.put("bloodGroup",userBloodGroup);
-//                                user.put("city",userCity);
-
                                 User user = new User(userName,userEmail,userContactNumber,userBloodGroup,userCity,userAddress,uri.toString(),currentUser.getUid().toString());
-                                System.out.println(user);
 
-                                //mDatabase.child("users").child(user.getUserID()).setValue(user);
-
-
-                                // Add a new document with a generated ID
                                 db.collection("users")
                                         .add(user)
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

@@ -5,6 +5,7 @@
     <string name="sign_in">Sign In</string>
     <string name="not_a_member">new user? </string>
     <string name="sign_up_here"> <u>sign up here</u></string>
+    <string name="sign_in_here"><u>sign in here</u></string>
     <array name="blood_groups">
         <item>A+</item>
         <item>A-</item>
