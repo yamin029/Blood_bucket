@@ -10,11 +10,16 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.List;
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MyAdapter extends FirestoreRecyclerAdapter<User,MyAdapter.MyViewHolder> {
 
+    private List<User> exampleListFull;
 
     private OnItemClickListener listener;
     /**
@@ -25,6 +30,7 @@ public class MyAdapter extends FirestoreRecyclerAdapter<User,MyAdapter.MyViewHol
      */
 
     public MyAdapter(FirestoreRecyclerOptions<User> options) {
+
         super(options);
     }
 
@@ -73,6 +79,7 @@ public class MyAdapter extends FirestoreRecyclerAdapter<User,MyAdapter.MyViewHol
             });
         }
     }
+
 
     public interface OnItemClickListener{
         void onItemClick(DocumentSnapshot documentSnapshot, int position);

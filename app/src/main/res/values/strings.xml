@@ -26,4 +26,9 @@
         <item>Rangpur</item>
         <item>Comilla</item>
     </array>
+    <array name="search_Item_selector">
+        <item>Name</item>
+        <item>Blood Group</item>
+        <item>City</item>
+    </array>
 </resources>

@@ -89,7 +89,9 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout.close();
     }
     public void clickSearch(View view){
-        redirectActivity(this, SearchUser.class);
+        //redirectActivity(this, SearchUser.class);
+        startActivity(new Intent(HomeActivity.this, SearchUser.class));
+
     }
     public void clickProfile(View view){
 

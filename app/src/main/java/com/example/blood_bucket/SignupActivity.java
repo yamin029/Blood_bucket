@@ -120,7 +120,7 @@ public class SignupActivity extends AppCompatActivity {
                                             Toast.makeText(SignupActivity.this, "SignUp Unsuccessful" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         } else {
                                             uploadProfileImage(userName,userEmail,userAddress,userContactNumber,userBloodGroup,userCity,imageUri,mAuth.getCurrentUser());
-                                            startActivity(new Intent(SignupActivity.this, HomeActivity.class));
+                                            startActivity(new Intent(SignupActivity.this, MainActivity.class));
                                         }
 
                                     }
@@ -242,7 +242,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 //imageTOStore = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
 
-                //sImageView.setImageURI(imageUri);
+                sImageView.setImageURI(imageUri);
 
             }
             else {
